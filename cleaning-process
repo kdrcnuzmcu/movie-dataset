@@ -1,0 +1,101 @@
+import pandas as pd
+import numpy as np
+import re
+import time
+import datetime as dt
+
+df_ = pd.read_csv("movies.csv", thousands=',', dtype = {"RunTime":float})
+df = df_.copy()
+df.head()
+
+# YEAR
+yil = []
+yil_ = []
+regex = "\d+"
+for i in df["YEAR"]:
+    try:
+        yil.append(str(i).replace("(", "").replace(")", "").replace("–", " "))
+    except:
+        pass
+    
+for i in yil:
+    i.split(" ")
+    yil_.append(re.findall(regex, i))
+    
+yil__ = pd.DataFrame(yil_)
+yil__.columns = ["Baslangic", "Bitis"]
+df = pd.concat([df, yil__], axis = 1)
+
+# df.drop("YEAR", axis = 1, inplace = True)
+
+# GENRE
+genre = df["GENRE"].values.tolist()
+genre_ = []
+for i in genre:
+    genre_.append(str(i).replace("\n","").replace(" ", "").replace(",", ", "))
+df["GENRE"] = genre_
+
+# ONE-LINE
+
+one_line = []
+for i in df["ONE-LINE"]:
+    one_line.append(str(i).replace("\n",""))
+df["ONE-LINE"] = one_line
+
+# STARS
+
+counter = 0
+directors = []
+stars = []
+for i in df["STARS"]:
+    a = i.replace("Directors", "Director").replace("\n", "").strip()
+    try:
+        if "Director" in a:
+            directors.append([counter, a[a.find("Director") + 9:a.find("|")]])
+        if "Stars" in a:
+            stars.append([counter, a[a.find("Stars") + 6:].strip()])
+    except:
+        raise
+        
+    counter = counter + 1
+    
+sta_ = pd.DataFrame(stars).set_index(0)
+sta_.columns = ["Stars"]
+dir_ = pd.DataFrame(directors).set_index(0)
+dir_.columns = ["Directors"]
+df.drop("STARS", axis = 1, inplace = True)
+df = pd.concat([df, dir_, sta_], axis = 1)
+df["Directors"] = df["Directors"].fillna("Unknown")
+df["Stars"] = df["Stars"].fillna("Unknown")
+
+# Gross
+
+df["Gross"] = df["Gross"].fillna(0)
+gross = []
+for i in df["Gross"]:
+    try:
+        gross.append(float(i.replace("$", "").replace("M", "")) * 1000000)
+    except:
+        gross.append(0)
+df["Gross_"] = gross
+
+# RunTime
+df["RunTime"] = df["RunTime"].fillna(0)
+df["Run_Time"] = df["RunTime"] * 60
+runtime = []
+for i in df["Run_Time"]:
+    try:
+        runtime.append(time.strftime('%H:%M:%S', time.gmtime(i)))
+    except:
+        runtime.append(np.nan)
+df["Run_Time"] = runtime   
+
+# Data Types 
+
+df["Baslangic"] = df["Baslangic"].fillna(0).astype("int64")
+df["Bitis"] = df["Bitis"].fillna(0).astype("int64")
+df["VOTES"] = df["VOTES"].fillna(0).astype("int64")
+df["RATING"] = df["RATING"].fillna(0).astype("float64")
+df["Run_Time"] = pd.to_datetime(df["Run_Time"], format = "%H:%M:%S").dt.time
+
+df.to_csv("movies_vol2.csv")
