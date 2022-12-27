@@ -39,6 +39,12 @@ GENRE değişkenini metinsel ve biçimsel olarak biraz daha düzgün bir formata
   - Son olarak değişkene .split() fonksiyonunu ekliyoruz ve parametre olarak virgül veriyoruz. Bu işlem metin bir ifade içindeki virgül karakterlerini bulacak ve bütün metni virgüllerden parçalara ayıracak.
   - Bütün bu işlemlerden sonra en başta tanımladığımız boş listeye bu değeri .append() ile ekliyoruz. for döngümüz bitince elimizde dolu bir liste oluyor. Listemizi veri setimizdeki GENRE değişkenine tekrar atıyoruz.
 
+![image](https://user-images.githubusercontent.com/28548881/209674347-55f18ca6-a2dc-44c8-bf93-dbb9933c3b68.png)
+Veri setimizden eksik değerlere sahip satırları çıkarttığımızda elimizde 8168 satır kaldı. Peki veri setimizde fazla değer var mı? Aynı isimde hem film hem de diziler olabilir ve işlemlerimizi yaparken bu büyük bir karışıklık yaratabilir. Genel düzenlemelerimizi bitirdikten sonra veri setimizi filmler ve diziler olarak ikiye bölebiliriz. 
+
+![image](https://user-images.githubusercontent.com/28548881/209674944-625d4d7c-3446-4ffc-b1d4-cbb054a10582.png)
+RATING sütunu ile hangi film veya dizinin çok beğenildiğini araştırdığımız zaman
+
 ![image](https://user-images.githubusercontent.com/28548881/209651770-9414e2ac-e9fe-420c-8eb3-568c1b19007e.png)
 
 ![image](https://user-images.githubusercontent.com/28548881/209651843-9c6afd8b-bf20-4ee6-9796-a8555c8166cc.png)
