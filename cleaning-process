@@ -56,52 +56,28 @@ namesSeries = namesSeries.drop_duplicates()
 namesMovies = Movies["MOVIES"]
 namesMovies = namesMovies.drop_duplicates()
 
-newGenreSeries = {}
+rowsSeries = []
 for i in namesSeries:
-    newGenreSeries.update({i: list(Series[Series["MOVIES"] == i]["GENRE"])[0]})
+    a = []
+    a.append(i)
+    a.append(list(Series[Series["MOVIES"] == i]["GENRE"])[0])
+    a.append(np.round(float(Series[Series["MOVIES"] == i]["VOTE"].sum() / Series[Series["MOVIES"] == i]["VOTES"].sum()), 1))
+    a.append(Series[Series["MOVIES"] == i]["VOTES"].sum())
+    a.append(list(Series[Series["MOVIES"] == i]["Stars"])[0])
+    rowsSeries.append(a)
     
-newGenreMovies = {}
+rowsMovies = []
 for i in namesMovies:
-    newGenreMovies.update({i: list(Movies[Movies["MOVIES"] == i]["GENRE"])[0]})
-
-newRatingSeries = {}
-for i in namesSeries:
-    newRatingSeries.update({i: np.round(float(Series[Series["MOVIES"] == i]["VOTE"].sum() / Series[Series["MOVIES"] == i]["VOTES"].sum()), 1)})
+    a = []
+    a.append(i)
+    a.append(list(Movies[Movies["MOVIES"] == i]["GENRE"])[0])
+    a.append(np.round(float(Movies[Movies["MOVIES"] == i]["VOTE"].sum() / Movies[Movies["MOVIES"] == i]["VOTES"].sum()), 1))
+    a.append(Movies[Movies["MOVIES"] == i]["VOTES"].sum())
+    a.append(list(Movies[Movies["MOVIES"] == i]["Stars"])[0])
+    rowsMovies.append(a)
     
-newRatingMovies = {}
-for i in namesMovies:
-    newRatingMovies.update({i: np.round(float(Movies[Movies["MOVIES"] == i]["VOTE"].sum() / Movies[Movies["MOVIES"] == i]["VOTES"].sum()), 1)})
-    
-newVoteSeries = {}
-for i in namesSeries:
-    newVoteSeries.update({i: Series[Series["MOVIES"] == i]["VOTES"].sum()})
-    
-newVoteMovies = {}
-for i in namesMovies:
-    newVoteMovies.update({i: Movies[Movies["MOVIES"] == i]["VOTES"].sum()})
-    
-newStarsSeries = {}
-for i in namesSeries:
-    newStarsSeries.update({i: list(Series[Series["MOVIES"] == i]["Stars"])[0]})
-    
-newStarsMovies = {}
-for i in namesMovies:
-    newStarsMovies.update({i: list(Movies[Movies["MOVIES"] == i]["Stars"])[0]})
-    
-series_df = pd.DataFrame(columns = ["Names", "Genres", "Ratings", "Votes", "Stars"])
-movies_df = pd.DataFrame(columns = ["Names", "Genres", "Ratings", "Votes", "Stars"])
-
-series_df["Names"] = namesSeries
-series_df["Genres"] = newGenreSeries.values()
-series_df["Ratings"] = newRatingSeries.values()
-series_df["Votes"] = newVoteSeries.values()
-series_df["Stars"] = newStarsSeries.values()
-
-movies_df["Names"] = namesMovies
-movies_df["Genres"] = newGenreMovies.values()
-movies_df["Ratings"] = newRatingMovies.values()
-movies_df["Votes"] = newVoteMovies.values()
-movies_df["Stars"] = newStarsMovies.values()
+series_df = pd.DataFrame(rowsSeries, columns = ["Names", "Genres", "Ratings", "Votes", "Stars"])
+movies_df = pd.DataFrame(rowsMovies, columns = ["Names", "Genres", "Ratings", "Votes", "Stars"])
 
 series_df["Genres"] = [",".join(map(str, i)) for i in series_df["Genres"]]
 movies_df["Genres"] = [",".join(map(str, i)) for i in movies_df["Genres"]]
