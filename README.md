@@ -6,7 +6,13 @@ Verisetini .read_csv() fonksiyonu ile okuyoruz. Verilere ilk bakışı atmak iç
   - Verisetimiz gördüğümüz kadarıyla bazı filmler ve onların çeşitli bilgilerini içeriyor.
   - MOVIES sütununda satırlarımızın en önemli değişkeni, filmlerin isimlerinin yer aldığını görüyoruz.
   - YEAR sütununun ilgili filmin vizyona çıkış yılı olarak değerlendiriyoruz. Fakat bazı satırlarda bu değer aralık olarak verilmiş. Bu verisetinde yalnızca filmlerin olmayacağı çıkarımını yapıyoruz.
-  - GENRE sütununda film ve dizilerin konu kategorilerinin isimleri yer alıyor. Metinsel bir ifade olduğunu görüyoruz ve her satırda "\n" gibi bir kaçış kodu yer alıyor. Muhtemelen bu verileri bir internet sitesinden çekildiğinin ve eksik değerlerin olabileceği çıkarımını yapıyoruz.
+  - GENRE sütununda film veya dizilerin konu kategorilerinin isimleri yer alıyor. Metinsel bir ifade olduğunu görüyoruz ve her satırda "\n" gibi bir kaçış kodu yer alıyor. Muhtemelen bu verileri bir internet sitesinden çekildiğinin ve eksik değerlerin olabileceği çıkarımını yapıyoruz.
+  - RATING sütununda film veya dizilerin oylamaların sonuncunda aldığı puanlar yer alıyor. İlk satırımızda 5.0 ile 9.2 arasında değişen puanların 10 üzerinden derecelendiğini kuvvetle düşünürüz.
+  - ONE-LINE sütunu ilgili film ve dizilerin konusu hakkında kısa bir bilgi içeriyor olabilir.
+  - STARS sütununu dikkatli incelediğimizde "Director" ve "Stars" başlıklarını görüyoruz. Ardından isim soyisimler geliyor. Çoğu satırda "Director" bilgisinin de eksik olduğunu görüyoruz.
+  - VOTES sütunu film veya dizilerin oylanma sayısını gösteriyor. Popülerlik araştırması yaparken kullanabileceğimiz bir değişken olabilir.
+  - RunTime sütununda film veya dizilerin süresi yer almaktadır. Genel olarak filmler dizilerin bir bölümünden daha uzundur. Ayrıca dizilerin kendi bölümleri içinde de bir eşitlik olması söz konusu olmadığı için kullanılmasının verimli olmadığını düşündüğüm bir değişkendir. 
+  - Gross sütunu filmlerin gişede kazandırdığı toplam paradır. Diziler bu konu dışında kalmaktadır. İlk on satırda gördüğümüz üzere filmlerde bile eksik veri mevcut.
 
 
 
