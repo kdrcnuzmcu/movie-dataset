@@ -20,12 +20,24 @@ Verilere ilk bakışı atmak için .head() fonksiyonunu kullanıyoruz. Bu fonksi
 
 
 ![image](https://user-images.githubusercontent.com/28548881/209650721-3552fa14-9a9d-479a-bc13-eb0b56d62e3a.png)
+.isnull() bize boolean bir değer döndüren, pandas verisetleri içinde eksik değer varlığını kontrol edebilmemize yardımcı olan bir fonksiyondur. .sum() fonksiyonu ile birleştirerek hangi sütunda kaç adet eksik değerimizin olduğunu bulabiliyoruz.
+  - En çok eksik değerin Gross sütununda olduğunu görüyoruz. Gross değişkenini herhangi bir analizde kullanmamız çok sağlıklı olmayacaktır.
+  - RunTime sütunu bir diğer eksik değeri fazla olan değişkenlerimizden bir tanesidir. Film ve dizilerin bulunduğu bir verisetinde ayırt edici özellik olarak kullanılması sağlıklı değildir.
+  - RATING ve VOTES sütunlarındaki eksik değer sayısı birbirine eşittir. Büyük olasılıkla bu eksik veriler aynı satırlarda yer almaktadır.
+  - YEAR sütunundaki eksik değerleri çıkarttığımızda halen vizyon tarihi üzerinden yapacağımız bir analizde işimize yarayacak kadar bilgi içeriyor diyebiliriz.
 
 ![image](https://user-images.githubusercontent.com/28548881/209650752-c3f31ac9-10bf-4ff9-9869-48b6b71e1f9f.png)
+.info() verisetimiz ve sütunları(değişken) hakkında özet bilgi vermektedir. Kaç adet satır(gözlem) içerdiği, değişken isimleri ve içerdiği gözlemlerin veri tipini verir.
 
 ![image](https://user-images.githubusercontent.com/28548881/209650873-4a69f1e5-8591-44c7-8098-59c94cf19992.png)
+Değişkenlerin eksik değerlerini kontrol ettik. Verisetimizin boyutunu .shape kelimesi ile öğreniyoruz. Bize bir demet(tuple) olarak geri dönüş yapıyor. Neredeyse 10bin adet satır ve 9 adet sütun olduğunu görüyoruz. Bizim için kritik olabilecek değişkenlerin eksik değerlerini temizledikten sonra görüyoruz ki veri setimizin %20'ye yakın kadarını kaybettik ve satır sayımız 8168 adede düştü. Tahmin ederek yerine koyabileceğimiz gözlemlerde eksik verileri yoketmek ilk tercihimiz olmamalıdır.
 
-![image](https://user-images.githubusercontent.com/28548881/209651576-c3530692-7e1e-44b1-b318-be1bd86919c6.png)
+![image](https://user-images.githubusercontent.com/28548881/209674142-954d79f9-a065-4743-bc1e-c4680ea945bf.png)
+GENRE değişkenini metinsel ve biçimsel olarak biraz daha düzgün bir formata getirmeye çalışıyoruz. GENRE değişkeni metinsel(string) tipinde saklanan gözlemlerden oluşmaktadır. 
+  - Python'da string değişkenlerde .replace() fonksiyonu ile değer içinde bulunan bizim belirlediğimiz bölümleri yeni değerlerle değiştirebiliyoruz. Eğer yeni değer kısmını boş bırakırsak bu string değişkenin taşıdığı metnin içinden aradığımız o bölümleri yerine koyacak değer vermediğimiz için silmek anlamına gelmektedir. 
+  - Ardından tekrar .replace() değişkenini kullanarak boşlukları temizliyoruz. Normalde boşlukları temizlemek için .strip() fonksiyonunu kullanabiliriz. Fakat burada metnin içinde konu kategorileri virgülle ayrılmış ve kelimeler arasında da boşluk vardır. .strip() fonksiyonu yalnızca dışta bulunan boşlukları temizlemektedir.
+  - Son olarak değişkene .split() fonksiyonunu ekliyoruz ve parametre olarak virgül veriyoruz. Bu işlem metin bir ifade içindeki virgül karakterlerini bulacak ve bütün metni virgüllerden parçalara ayıracak.
+  - Bütün bu işlemlerden sonra en başta tanımladığımız boş listeye bu değeri .append() ile ekliyoruz. for döngümüz bitince elimizde dolu bir liste oluyor. Listemizi veri setimizdeki GENRE değişkenine tekrar atıyoruz.
 
 ![image](https://user-images.githubusercontent.com/28548881/209651770-9414e2ac-e9fe-420c-8eb3-568c1b19007e.png)
 
