@@ -1,7 +1,10 @@
 # movie-dataset
 Bir rastgele verisetine manipüle ederek daha okunabilir bir hale getirmeye çalıştım.
 
-Verisetini .read_csv() fonksiyonu ile okuyoruz. Verilere ilk bakışı atmak için .head() fonksiyonunu kullanıyoruz. Bu fonksiyon verisetinin baştan ilk beş satırını size getirir. Satırlar ve sütunları inceliyoruz. Verisetinin genel yapısı hakkında ilk bilgilerimizi ediniyoruz. 
+![image](https://user-images.githubusercontent.com/28548881/209658161-4f74918b-a55e-4065-9c4e-056663ec1425.png)
+Verisetini .read_csv() fonksiyonu ile okuyoruz. "thousands=','" ifadesi ile basamakları virgül ile ayrılmış ve metinsel olarak algılanan değişkenleri kolaylıkla sayısal değişkene çevirebiliyoruz.
+
+Verilere ilk bakışı atmak için .head() fonksiyonunu kullanıyoruz. Bu fonksiyon verisetinin baştan ilk beş satırını size getirir. Satırlar ve sütunları inceliyoruz. Verisetinin genel yapısı hakkında ilk bilgilerimizi ediniyoruz. 
 ![image](https://user-images.githubusercontent.com/28548881/209650542-f2c3014f-136a-4fbd-aa4f-6562dcb894cd.png)
   - Verisetimiz gördüğümüz kadarıyla bazı filmler ve onların çeşitli bilgilerini içeriyor.
   - MOVIES sütununda satırlarımızın en önemli değişkeni, filmlerin isimlerinin yer aldığını görüyoruz.
