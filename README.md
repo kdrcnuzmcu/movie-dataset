@@ -1,7 +1,15 @@
 # movie-dataset
-A random movie dataset cleaning and analysing
+Bir rastgele verisetine manipüle ederek daha okunabilir bir hale getirmeye çalıştım.
 
+Verisetini .read_csv() fonksiyonu ile okuyoruz. Verilere ilk bakışı atmak için .head() fonksiyonunu kullanıyoruz. Bu fonksiyon verisetinin baştan ilk beş satırını size getirir. Satırlar ve sütunları inceliyoruz. Verisetinin genel yapısı hakkında ilk bilgilerimizi ediniyoruz. 
 ![image](https://user-images.githubusercontent.com/28548881/209650542-f2c3014f-136a-4fbd-aa4f-6562dcb894cd.png)
+  - Verisetimiz gördüğümüz kadarıyla bazı filmler ve onların çeşitli bilgilerini içeriyor.
+  - MOVIES sütununda satırlarımızın en önemli değişkeni, filmlerin isimlerinin yer aldığını görüyoruz.
+  - YEAR sütununun ilgili filmin vizyona çıkış yılı olarak değerlendiriyoruz. Fakat bazı satırlarda bu değer aralık olarak verilmiş. Bu verisetinde yalnızca filmlerin olmayacağı çıkarımını yapıyoruz.
+  - GENRE sütununda film ve dizilerin konu kategorilerinin isimleri yer alıyor. Metinsel bir ifade olduğunu görüyoruz ve her satırda "\n" gibi bir kaçış kodu yer alıyor. Muhtemelen bu verileri bir internet sitesinden çekildiğinin ve eksik değerlerin olabileceği çıkarımını yapıyoruz.
+
+
+
 
 ![image](https://user-images.githubusercontent.com/28548881/209650721-3552fa14-9a9d-479a-bc13-eb0b56d62e3a.png)
 
