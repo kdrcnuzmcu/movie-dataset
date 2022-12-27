@@ -9,4 +9,12 @@ A random movie dataset cleaning and analysing
 
 ![image](https://user-images.githubusercontent.com/28548881/209650873-4a69f1e5-8591-44c7-8098-59c94cf19992.png)
 
-![image](https://user-images.githubusercontent.com/28548881/209651495-d9d725c6-9695-4649-86b7-e07a4cefb794.png)
+![image](https://user-images.githubusercontent.com/28548881/209651576-c3530692-7e1e-44b1-b318-be1bd86919c6.png)
+
+![image](https://user-images.githubusercontent.com/28548881/209651770-9414e2ac-e9fe-420c-8eb3-568c1b19007e.png)
+
+![image](https://user-images.githubusercontent.com/28548881/209651843-9c6afd8b-bf20-4ee6-9796-a8555c8166cc.png)
+
+![image](https://user-images.githubusercontent.com/28548881/209651951-57e7a926-5edb-4562-a979-4e94298033b3.png)
+
+![image](https://user-images.githubusercontent.com/28548881/209652085-ee738f4a-69d6-4f8d-8f31-ed40905e1480.png)
