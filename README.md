@@ -13,10 +13,6 @@ Verisetini .read_csv() fonksiyonu ile okuyoruz. Verilere ilk bakışı atmak iç
   - VOTES sütunu film veya dizilerin oylanma sayısını gösteriyor. Popülerlik araştırması yaparken kullanabileceğimiz bir değişken olabilir.
   - RunTime sütununda film veya dizilerin süresi yer almaktadır. Genel olarak filmler dizilerin bir bölümünden daha uzundur. Ayrıca dizilerin kendi bölümleri içinde de bir eşitlik olması söz konusu olmadığı için kullanılmasının verimli olmadığını düşündüğüm bir değişkendir. 
   - Gross sütunu filmlerin gişede kazandırdığı toplam paradır. Diziler bu konu dışında kalmaktadır. İlk on satırda gördüğümüz üzere filmlerde bile eksik veri mevcut.
-
-
-
-
 ![image](https://user-images.githubusercontent.com/28548881/209650721-3552fa14-9a9d-479a-bc13-eb0b56d62e3a.png)
 
 ![image](https://user-images.githubusercontent.com/28548881/209650752-c3f31ac9-10bf-4ff9-9869-48b6b71e1f9f.png)
