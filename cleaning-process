@@ -1,29 +1,29 @@
 import pandas as pd
 import numpy as np
 
-df_ = pd.read_csv("movies.csv", thousands=',', dtype = {"RunTime":float})
+df_ = pd.read_csv("movies.csv", thousands=',')
 df = df_.copy()
 
 df = df.dropna(subset = ["YEAR"])
 df = df.dropna(subset = ["GENRE"])
 df = df.dropna(subset = ["VOTES"])
 
-df["VOTE"] = df["RATING"] * df["VOTES"]
+isSeries = []
+for i in df["YEAR"].str.contains("–"):
+    if i:
+        isSeries.append(1)
+    else:
+        isSeries.append(0)
+df["IS_SERIES"] = isSeries
 
-genre = df["GENRE"].values.tolist()
-genre_ = []
-for i in genre:
-    genre_.append(str(i).replace("\n","").replace(" ", "").split(","))
-df["GENRE"] = genre_
+genre = []
+for i in df["GENRE"]:
+    genre.append(str(i).replace("\n","").replace(" ", "").split(","))
+df["GENRE"] = genre
 
-#df["GENRE"] = [",".join(map(str, i)) for i in df["GENRE"]] ### ÇOK ÖNEMLİ ###
+df["MOVIES"] = df["MOVIES"].str.strip() 
 
-isSeries = dict(df["YEAR"].str.contains("–"))
-isSeries_ = []
-for i in isSeries.values():
-    if i:isSeries_.append(1)
-    else:isSeries_.append(0)
-df["Series"] = isSeries_
+df["RATING_VOTES"] = df["RATING"] * df["VOTES"]
 
 df["STARS"] = df["STARS"].str.replace("\n", "")
 df["STARS"] = df["STARS"].str.strip()
@@ -31,18 +31,29 @@ df["STARS"] = df["STARS"].str.strip()
 directors = []
 for i in df["STARS"]:
     i.replace("Directors", "Director")
-    if i.find("Director") == -1:directors.append("Unknown")
-    else:directors.append(i[i.find("Director") + 9: i.find("|")])
-df["Directors"] = directors
+    if i.find("Director") == -1:
+        directors.append("Unknown")
+    else:
+        directors.append(i[i.find("Director") + 9: i.find("|")])
+
 stars = []
 for i in df["STARS"]:
-    if i.find("Stars") == -1:stars.append("Unknown")
-    else:stars.append(i[i.find("Stars") + 6:])
+    i.replace("Star", "Stars")
+    if i.find("Stars") == -1:
+        stars.append("Unknown")
+    else:
+        stars.append(i[i.find("Stars") + 6:])
+        
+df["Directors"] = directors        
 df["Stars"] = stars
-df = df.drop(["STARS"], axis = 1)
 
-Series = df[df["Series"] == 1]
-Movies = df[df["Series"] == 0]
+oneline = []
+for i in df["ONE-LINE"]:
+    oneline.append(str(i).replace("\n",""))
+df["ONE-LINE"] = oneline
+
+Series = df[df["IS_SERIES"] == 1]
+Movies = df[df["IS_SERIES"] == 0]
 
 Series = Series.reset_index()
 Movies = Movies.reset_index()
@@ -50,31 +61,28 @@ Movies = Movies.reset_index()
 Series["MOVIES"] = Series["MOVIES"].str.strip()
 Movies["MOVIES"] = Movies["MOVIES"].str.strip()
 
-namesSeries = Series["MOVIES"]
-namesSeries = namesSeries.drop_duplicates()
-
-namesMovies = Movies["MOVIES"]
-namesMovies = namesMovies.drop_duplicates()
+namesSeries = Series["MOVIES"].unique().tolist()
+namesMovies = Movies["MOVIES"].unique().tolist()
 
 rowsSeries = []
 for i in namesSeries:
     a = []
     a.append(i)
     a.append(list(Series[Series["MOVIES"] == i]["GENRE"])[0])
-    a.append(np.round(float(Series[Series["MOVIES"] == i]["VOTE"].sum() / Series[Series["MOVIES"] == i]["VOTES"].sum()), 1))
+    a.append(np.round(float(Series[Series["MOVIES"] == i]["RATING_VOTES"].sum() / Series[Series["MOVIES"] == i]["VOTES"].sum()), 1))
     a.append(Series[Series["MOVIES"] == i]["VOTES"].sum())
     a.append(list(Series[Series["MOVIES"] == i]["Stars"])[0])
     rowsSeries.append(a)
-    
+
 rowsMovies = []
 for i in namesMovies:
     a = []
     a.append(i)
     a.append(list(Movies[Movies["MOVIES"] == i]["GENRE"])[0])
-    a.append(np.round(float(Movies[Movies["MOVIES"] == i]["VOTE"].sum() / Movies[Movies["MOVIES"] == i]["VOTES"].sum()), 1))
+    a.append(np.round(float(Movies[Movies["MOVIES"] == i]["RATING_VOTES"].sum() / Movies[Movies["MOVIES"] == i]["VOTES"].sum()), 1))
     a.append(Movies[Movies["MOVIES"] == i]["VOTES"].sum())
     a.append(list(Movies[Movies["MOVIES"] == i]["Stars"])[0])
-    rowsMovies.append(a)
+    rowsMovies.append(a) 
     
 series_df = pd.DataFrame(rowsSeries, columns = ["Names", "Genres", "Ratings", "Votes", "Stars"])
 movies_df = pd.DataFrame(rowsMovies, columns = ["Names", "Genres", "Ratings", "Votes", "Stars"])
