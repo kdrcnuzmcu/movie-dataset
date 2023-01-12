@@ -72,6 +72,7 @@ for i in namesSeries:
     a.append(np.round(float(Series[Series["MOVIES"] == i]["RATING_VOTES"].sum() / Series[Series["MOVIES"] == i]["VOTES"].sum()), 1))
     a.append(Series[Series["MOVIES"] == i]["VOTES"].sum())
     a.append(list(Series[Series["MOVIES"] == i]["Stars"])[0])
+    a.append(list(Series[Series["MOVIES"] == i]["ONE-LINE"])[0])
     rowsSeries.append(a)
 
 rowsMovies = []
@@ -82,13 +83,37 @@ for i in namesMovies:
     a.append(np.round(float(Movies[Movies["MOVIES"] == i]["RATING_VOTES"].sum() / Movies[Movies["MOVIES"] == i]["VOTES"].sum()), 1))
     a.append(Movies[Movies["MOVIES"] == i]["VOTES"].sum())
     a.append(list(Movies[Movies["MOVIES"] == i]["Stars"])[0])
+    a.append(list(Movies[Movies["MOVIES"] == i]["ONE-LINE"])[0])
     rowsMovies.append(a) 
     
-series_df = pd.DataFrame(rowsSeries, columns = ["Names", "Genres", "Ratings", "Votes", "Stars"])
-movies_df = pd.DataFrame(rowsMovies, columns = ["Names", "Genres", "Ratings", "Votes", "Stars"])
+series_df = pd.DataFrame(rowsSeries, columns = ["Names", "Genres", "Ratings", "Votes", "Stars", "One-Line"])
+movies_df = pd.DataFrame(rowsMovies, columns = ["Names", "Genres", "Ratings", "Votes", "Stars", "One-Line"])
 
 series_df["Genres"] = [",".join(map(str, i)) for i in series_df["Genres"]]
 movies_df["Genres"] = [",".join(map(str, i)) for i in movies_df["Genres"]]
 
 series_df["Votes"] = series_df["Votes"].astype("int64")
 movies_df["Votes"] = movies_df["Votes"].astype("int64")
+
+# # # # # 
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+tfidf = TfidfVectorizer(stop_words = "english")
+
+tfidf_matrix = tfidf.fit_transform(movies_df["One-Line"])
+
+
+cosine_sim = cosine_similarity(tfidf_matrix)
+
+def oner(film):
+    index = movies_df.index[movies_df['Names'] == film].tolist()[0]
+    oneriler = pd.DataFrame(cosine_sim[index], columns = ["score"]).sort_values(by = "score", ascending = False)[1:11]
+    filmler = []
+    for i, j in oneriler.iterrows():    
+        filmler.append(movies_df.loc[i, :])
+    return pd.DataFrame(filmler)
+
+oner(film = "The Hobbit: An Unexpected Journey")
+
