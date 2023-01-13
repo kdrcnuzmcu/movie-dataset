@@ -117,3 +117,25 @@ def oner(film):
 
 oner(film = "The Hobbit: An Unexpected Journey")
 
+
+movies = []
+recommends = []
+for index, movie in movies_df[["Names"]].iterrows():
+    oneriler = pd.DataFrame(cosine_sim[index], columns = ["score"]).sort_values(by = "score", ascending = False)[1:6]
+    a = []
+    for i, j in oneriler.iterrows():
+        a.append(movies_df.loc[i, "Names"]) 
+    recommends.append(a)   
+    movies.append(movie["Names"])
+
+recommends = pd.DataFrame(recommends)
+recommend_list = pd.DataFrame(movies)
+recommend_list = pd.concat([recommend_list, recommends], axis = 1)
+recommend_list.columns = ["Movie", "1", "2", "3", "4", "5"]
+
+recommend_list.head()
+
+import sqlite3
+con = sqlite3.Connection("movieRecommends.db")
+
+recommend_list.to_sql("Movies", con)
